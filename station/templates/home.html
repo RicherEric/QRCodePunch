@@ -1,0 +1,33 @@
+<!-- station/templates/station/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        /* 添加一些基本样式 */
+        #menu {
+            width: 200px;
+            float: left;
+        }
+        #content {
+            margin-left: 210px;
+        }
+    </style>
+</head>
+<body>
+    <h1>歡迎光臨!!駐點管理系統</h1>
+    <li><a href="{% url 'station_list' %}">駐點列表</a></li>
+    {% if request.user.is_authenticated %}
+        <p>Hi, {{ request.user.email }}!</p>
+        <p>您的角色: {% if request.user.is_superuser %}最高權限管理員{% elif request.user.is_admin or request.user.is_staff %}管理員{% else %}一般使用者{% endif %}</p>
+        <li><a href="{% url 'station_list' %}">駐點列表</a></li>
+        <li><a href="{% url 'admin:index' %}">權限管理</a></li>
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</body>
+</html>
+
+

@@ -1,0 +1,7 @@
+
+<!-- station/templates/station/add_station.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Station</button>
+</form>

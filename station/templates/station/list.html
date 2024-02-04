@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>駐點列表</title>
+</head>
+<body>
+    <h1>駐點列表</h1>
+    
+    <!-- 返回首頁 -->
+    <p><a href="{% url 'home' %}">返回首頁</a></p>
+    <p>
+        <a href="{% url 'add_station' %}">新增駐點</a> | 
+        <a href="{% url 'add_checkpoint' %}">新增檢查點</a>
+    </p>
+
+    <ul>
+        {% for station in stations %}
+            <li>
+                <a href="{% url 'station_detail' pk=station.pk %}">{{ station.name }}</a>
+                <a href="{% url 'delete_station' pk=station.pk %}" onclick="return confirm('Are you sure?');">删除</a>
+            </li>
+        {% empty %}
+            <li>没有駐點資料。</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
