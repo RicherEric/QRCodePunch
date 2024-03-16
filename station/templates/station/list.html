@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>駐點列表</title>
+    <style>
+        body {
+            display: flex;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #9fe0ca;
+            padding: 20px;
+            height: 100vh;
+        }
+        #content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #b8b6c0;
+        }
+    </style>
 </head>
 <body>
-    <h1>駐點列表</h1>
-    
-    <!-- 返回首頁 -->
-    <p><a href="{% url 'home' %}">返回首頁</a></p>
-    <p>
-        <a href="{% url 'add_station' %}">新增駐點</a> | 
-        <a href="{% url 'add_checkpoint' %}">新增檢查點</a>
-    </p>
-
-    <ul>
-        {% for station in stations %}
-            <li>
-                <a href="{% url 'station_detail' pk=station.pk %}">{{ station.name }}</a>
-                <a href="{% url 'delete_station' pk=station.pk %}" onclick="return confirm('Are you sure?');">删除</a>
-            </li>
-        {% empty %}
-            <li>没有駐點資料。</li>
-        {% endfor %}
-    </ul>
+    <div id="sidebar">
+        <p><a href="{% url 'home' %}">返回首頁</a></p>
+        <p><a href="{% url 'add_station' %}">新增駐點</a></p>
+        <p><a href="{% url 'add_checkpoint' %}">新增檢查點</a></p>
+    </div>
+    <div id="content">
+        <h1>駐點列表</h1>
+        <ul>
+            {% for station in stations %}
+                <li>
+                    <a href="{% url 'station_detail' pk=station.pk %}">{{ station.name }}</a>
+                    <a href="{% url 'delete_station' pk=station.pk %}" onclick="return confirm('Are you sure?');">删除</a>
+                </li>
+            {% empty %}
+                <li>没有駐點資料。</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

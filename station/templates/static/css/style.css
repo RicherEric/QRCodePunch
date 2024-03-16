@@ -1,0 +1,31 @@
+/* style.css 文件內容 */
+body {
+    display: flex;
+    min-height: 100vh;
+    margin: 0;
+}
+#sidebar {
+    width: 200px;
+    background-color: #9fe0ca;
+    padding-top: 20px;
+    height: 100vh;
+}
+#content {
+    flex-grow: 1;
+    background-color: #b8b6c0;
+    padding: 20px;
+    margin-left: 20px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+ul a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    color: black;
+}
+ul a:hover {
+    background-color: #ddd;
+}

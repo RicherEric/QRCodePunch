@@ -7,25 +7,24 @@ from PIL import Image, ImageDraw
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class Station(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.TextField()
+    name = models.CharField(max_length=100, verbose_name='駐點')
+    address = models.TextField(max_length=200, verbose_name='地址')
 
     def __str__(self):
         return self.name
 
 class Checkpoint(models.Model):
-    station = models.ForeignKey(Station, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name='駐點')
+    name = models.CharField(max_length=100, verbose_name='檢查點名稱')
     qr_code = models.ImageField(upload_to='qrcodes/', blank=True)
 
     def save(self, *args, **kwargs):
         is_new = self._state.adding
         super().save(*args, **kwargs)
 
-        # 如果是新对象且没有 QR Code，则生成 QR Code
+        # 如果是新對象且沒有 QR Code，則生成 QR Code
         if is_new or not self.qr_code:
             qrcode_data = f'http://127.0.0.1:8000/scan/{self.pk}'
-            print('qrcode_data: ', qrcode_data)
             qrcode_img = qrcode.make(qrcode_data)
             canvas = Image.new('RGB', (290, 290), 'white')
             draw = ImageDraw.Draw(canvas)

@@ -5,7 +5,7 @@ from .views import CustomLoginView, CustomLogoutView, add_station, add_checkpoin
 urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('', views.home, name='home'),  # 首页
+    path('', views.home, name='home'), 
     path('stations/', views.station_list, name='station_list'),
     path('stations/<int:pk>/', views.station_detail, name='station_detail'),
     path('add-station/', add_station, name='add_station'),

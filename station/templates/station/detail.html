@@ -2,24 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ station.name }} 详情</title>
+    <title>{{ station.name }} 駐點詳細資訊</title>
+    <style>
+        body {
+            display: flex;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            height: 100vh;
+        }
+        #content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ station.name }}</h1>
-    <p>{{ station.address }}</p>
-
-    <h2>檢查點</h2>
-    <ul>
-        {% for checkpoint in checkpoints %}
-            <li>
-                {{ checkpoint.name }}
-                <img src="{{ checkpoint.qr_code.url }}" alt="QR Code for {{ checkpoint.name }}">
-            </li>
-            <a href="{% url 'delete_checkpoint' pk=checkpoint.pk %}" onclick="return confirm('確定要刪除此檢查點？');">刪除檢查點</a>
-        {% empty %}
-            <li>該駐點沒有檢查點。</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'station_list' %}">返回駐點列表</a>
+    <div id="sidebar">
+        <p><a href="{% url 'home' %}">返回首頁</a></p>
+        <p><a href="{% url 'add_station' %}">新增駐點</a></p>
+        <p><a href="{% url 'add_checkpoint' %}">新增檢查點</a></p>
+        <p><a href="{% url 'station_list' %}">返回駐點列表</a></p>
+    </div>
+    <div id="content">
+        <h1>{{ station.name }}</h1>
+        <p>{{ station.address }}</p>
+        <h2>檢查點</h2>
+        <ul>
+            {% for checkpoint in checkpoints %}
+                <li>
+                    {{ checkpoint.name }}
+                    <img src="{{ checkpoint.qr_code.url }}" alt="QR Code for {{ checkpoint.name }}">
+                    <a href="{% url 'delete_checkpoint' pk=checkpoint.pk %}" onclick="return confirm('確定要刪除此檢查點？');">刪除檢查點</a>
+                </li>
+            {% empty %}
+                <li>該駐點沒有檢查點。</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

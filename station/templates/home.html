@@ -1,33 +1,59 @@
-<!-- station/templates/station/home.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
     <title>Home</title>
     <style>
-        /* 添加一些基本样式 */
-        #menu {
-            width: 200px;
-            float: left;
+        body {
+            display: flex;
+            min-height: 100vh; /* 確保整個視窗高度被填滿 */
+            margin: 0; /* 移除預設的邊距 */
         }
-        #content {
-            margin-left: 210px;
+        #sidebar {
+            width: 200px;
+            background-color: #9fe0ca; /* 淺藍色背景 */
+            padding-top: 20px; /* 頂部留白 */
+        }
+        #content    {
+            flex-grow: 1; /* 使內容區域填滿剩餘空間 */
+            background-color: #b8b6c0; /* 淺藍色背景 */
+            padding: 20px; /* 內容留白 */
+        }
+        ul {
+            list-style-type: none; /* 移除列表標記 */
+            padding: 0; /* 移除內邊距 */
+        }
+        ul a {
+            text-decoration: none; /* 移除下劃線 */
+            display: block; /* 讓鏈接填滿容器 */
+            padding: 10px; /* 鏈接留白 */
+            color: black; /* 文字顏色 */
+        }
+        ul a:hover {
+            background-color: #ddd; /* 滑鼠懸停時的背景顏色 */
         }
     </style>
 </head>
 <body>
-    <h1>歡迎光臨!!駐點管理系統</h1>
-    <li><a href="{% url 'station_list' %}">駐點列表</a></li>
-    {% if request.user.is_authenticated %}
-        <p>Hi, {{ request.user.email }}!</p>
-        <p>您的角色: {% if request.user.is_superuser %}最高權限管理員{% elif request.user.is_admin or request.user.is_staff %}管理員{% else %}一般使用者{% endif %}</p>
-        <li><a href="{% url 'station_list' %}">駐點列表</a></li>
-        <li><a href="{% url 'admin:index' %}">權限管理</a></li>
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-    {% endif %}
+    <div id="sidebar">
+        <ul>
+            <li><a href="{% url 'station_list' %}">駐點列表</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'admin:index' %}">權限管理</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div id="content">
+        <h1>歡迎光臨!!駐點管理系統</h1>
+        {% if request.user.is_authenticated %}
+            <p>Hi, {{ request.user.email }}!</p>
+            <p>您的角色: {% if request.user.is_superuser %}最高權限管理員{% elif request.user.is_admin or request.user.is_staff %}管理員{% else %}一般使用者{% endif %}</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
 </body>
 </html>
-
-

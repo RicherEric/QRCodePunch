@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import dj_database_url
+# import dj_database_url
 from pathlib import Path
 import os
 
@@ -27,8 +27,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False')
-# ALLOWED_HOSTS = ['QRCodePunch.com', 'www.QRCodePunch.com', '127.0.0.1']
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['QRCodePunch.com', 'www.QRCodePunch.com', '127.0.0.1', 'localhost', '192.168.100.3']
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 AUTH_USER_MODEL = 'station.CustomUser'
 
@@ -82,7 +82,17 @@ WSGI_APPLICATION = 'QRCodePunch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'qrcode',
+        'USER': 'postgres',
+        'PASSWORD': '1qaz2wsx',
+        'HOST': 'localhost',  # 或者是您 PostgreSQL 服務器的主機名
+        'PORT': '5432',       # 或者是您 PostgreSQL 服務器的端口
+    }
+}
+
 
 
 # Password validation
@@ -129,4 +139,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
